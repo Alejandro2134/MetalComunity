@@ -1,0 +1,21 @@
+nav.navbar.is-black(role='navigation' aria-label='main navigation')
+    .container
+        .navbar-brand
+            a.navbar-item(href='http://localhost:3000/')
+                img(src='/static/img/logo.png' alt='logo')
+            a.navbar-burger.burger(role='button' aria-label='menu' aria-expanded='false' data-target='navbarMenu')
+                span(aria-hidden='true')
+                span(aria-hidden='true')
+                span(aria-hidden='true')
+        .navbar-menu(id='navbarMenu')
+            .navbar-start
+                a.navbar-item Albums
+                a.navbar-item News
+                a.navbar-item Concerts
+                a.navbar-item Reviews
+            .navbar-end
+                .navbar-item
+                    .buttons
+                        a.button.is-dark
+                            strong Sign up
+                        a.button.is-light Log in
