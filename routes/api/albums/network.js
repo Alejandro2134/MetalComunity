@@ -5,8 +5,8 @@ const controller = require('./controller');
 const { succes, error } = require('../../../network/response');
 
 router.get('/', (req, res) => {
-    const { page } = req.query;
-    controller.getAlbums(page)
+    const { page, random } = req.query;
+    controller.getAlbums(page, random)
         .then(data => {
             succes(req, res, data, 200);
         })

@@ -6,7 +6,8 @@ const connect = async (url) => {
     await db.connect(url, {
         useCreateIndex: true,
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
     });
 
     console.log('[db] Conectada con éxito');

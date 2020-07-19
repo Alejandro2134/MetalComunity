@@ -1,8 +1,8 @@
 const store = require('./store');
 
-const getAlbums = () => {
+const getAlbums = async (page, random) => {
     return new Promise((resolve, reject) => {
-        resolve(store.get());
+       resolve(store.get(page, random));
     })
 }
 

@@ -7,19 +7,12 @@ autoIncrement.initialize(mongoose.connection);
 const mySchema = new Schema({
     band_name: { type: String, required: true },
     name: { type: String, required: true },
-    genre: { type: String, required: true },
+    genre: [String],
     image: { type: String, required: true },
     rating: { type: Number, default: 0.0 },
     buy_links: [String],
     reviews: [String],
-    comments: [{
-        body: { type: String, minlength: 70, maxlength: 280 },
-        date: {
-            type: Date,
-            default: Date.now
-        },
-        user: { type: Number, ref: 'User' }
-    }],
+    comments: [String],
     created: { type: Date, default: Date.now }
 })
 
