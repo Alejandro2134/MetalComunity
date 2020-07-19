@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 autoIncrement.initialize(mongoose.connection);
 
@@ -16,6 +17,7 @@ const mySchema = new Schema({
     created: { type: Date, default: Date.now }
 })
 
+mySchema.plugin(mongoosePaginate);
 mySchema.plugin(autoIncrement.plugin, {
     model: 'Album',
     startAt: 1,

@@ -6,13 +6,4 @@ const routesApi = (app) => {
     app.use('/api/albums', albumsRouter);
 }
 
-const home = require('../routes/home');
-
-const routes = (app) => {
-    app.use('/', home);
-}
-
-module.exports = {
-    routesApi,
-    routes
-}
+module.exports = routesApi;

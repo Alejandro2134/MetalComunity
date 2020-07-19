@@ -1,70 +1,43 @@
 const Model = require('./model');
 
 const getAlbums = async (page, random) => {
-
-    if(random && page) {
+    if(page && random) {
         return 'Use only one query';
     } else {
         if(random) {
-            try {
-                const num = Number.parseInt(random);
-                const data = await Model.aggregate([
-                    { $sample: { size: num } }
-                ])
-                return data;
-            } catch(err) {
-                return err;
-            }
+            const num = Number.parseInt(random);
+            const response = await Model.aggregate([
+                { $sample: { size: num } }
+            ])
+            return response;
         } else {
-            try {
-                const count = await Model.countDocuments({});
-        
-                if(page > Math.ceil(count / 20)) {
-                    throw 'There is nothing here';
-                } else {
-        
-                    const prev = page - 1;
-                    const next = page + 1;
-        
-                    const limit = () => {
-                        if(page && page != 0) {
-                            return page * 20
-                        } else {
-                            return 20;
-                        }
+            const options = {
+                page: (() => {
+                    if(!page || page == 0){
+                        return 1;
+                    } else {
+                        return Number.parseInt(page);
                     }
-        
-                    const init = () => {
-                        if(page && page != 0) {
-                            return (prev * 20) + 1
-                        }else {
-                            return 1;
-                        }
-                    }
-        
-                    const data = await Model.find({ _id: { $gte: init(), $lte: limit() } }).exec();
-                
-                    const response = {
-                        info: {
-                            count: count,
-                            pages: Math.ceil(count / 20),
-                            next: page < Math.ceil(count / 20) 
-                                    ? page == 0 
-                                        ?  Math.ceil(count / 20) > 1
-                                            ? 'http://localhost:3000/api/albums?page=2'
-                                            : null
-                                        : `http://localhost:3000/api/albums?page=${next}` 
-                                    : null,
-                            prev: page > 1 ? `http://localhost:3000/api/albums?page=${prev}` : null
-                        },
-                        results: data
-                    }
-                
-                    return response;
+                })(),
+                limit: 10,
+                collation: {
+                    locale: 'en'
                 }
-            } catch (err) {
-                return err;
+            };
+            
+            const data = await Model.paginate({}, options);
+
+            const response = {
+                info: {
+                    count: data.totalDocs,
+                    pages: data.totalPages,
+                    next: data.nextPage ? `http://localhost:3000/api/albums?page=${data.nextPage}` : null,
+                    prev: data.prevPage ? `http://localhost:3000/api/albums?page=${data.prevPage}` : null
+                },
+                results: data.docs
             }
+
+            return response;
         }
     }
 }
