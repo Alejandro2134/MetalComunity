@@ -1,9 +1,21 @@
-const albumsRouter = require('../routes/api/albums/network');
+const albumRouter = require('../routes/api/album/network');
+const commentRouter = require('../routes/api/comment/network');
+const reviewRouter = require('../routes/api/review/network');
+const userRouter = require('../routes/api/user/network');
 const apiRouter = require('../routes/api');
+
+const { error } = require('./response');
 
 const routesApi = (app) => {   
     app.use('/api', apiRouter);
-    app.use('/api/albums', albumsRouter);
+    app.use('/api/albums', albumRouter);
+    app.use('/api/comments', commentRouter);
+    app.use('/api/reviews', reviewRouter);
+    app.use('/api/user', userRouter);
+
+    app.use((req, res) => {
+        error(req, res, 'There is nothing here.', 404, 'Route not found');
+    })
 }
 
 module.exports = routesApi;
