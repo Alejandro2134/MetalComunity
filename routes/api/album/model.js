@@ -21,7 +21,7 @@ const mySchema = new Schema({
     },
     rating: { 
         type: Number, 
-        default: 0.0 
+        default: 0
     },
     buy_links: [String],
     reviews: String,
