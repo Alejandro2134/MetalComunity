@@ -1,8 +1,33 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../../../middlewares/auth');
+const controller = require('./controller');
+const { succes, error } = require('../../../network/response');
 
-router.post('/', (req, res) => {
+router.post('/:idAlbum', auth, (req, res) => {
+    const { idAlbum, user_name } = req.params;
+    const { review } = req.body;
+
+    controller.addReview(idAlbum, user_name, review)
+        .then(data => {
+            succes(req, res, data, 201);
+        })
+        .catch(err => {
+            error(req, res, 'Internal error', 500, err);
+        })
+})
+
+router.get('/:idAlbum', (req, res) => {
+    const { idAlbum } = req.params;
+    const { page } = req.query;
     
+    controller.getReviewsAlbum(idAlbum, page)
+        .then(data => {
+            succes(req, res, data, 200);
+        })
+        .catch(err => {
+            error(req, res, 'Internal error', 500, err);
+        })
 })
 
 module.exports = router;
