@@ -12,13 +12,4 @@ const routesApi = (app) => {
     app.use('/api/user', userRouter);
 }
 
-const index = require('../routes/views/index');
-
-const routesViews = (app) => {
-    app.use('/index', index);
-}
-
-module.exports = {
-    routesViews,
-    routesApi
-}
+module.exports = routesApi;
