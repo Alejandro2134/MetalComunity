@@ -1,0 +1,12 @@
+{
+    "version": 2,
+    "builds": [{ "src": "index.js", "use": "@now/node-server" }],
+    "routes": [{ "src": "/(.*)", "dest": "/index.js" }],
+    "env": {
+      "DB_USER_NAME": "@db-user-name-production-eatv",
+      "DB_PASSWORD": "@db-password-production-6z1c",
+      "DB_NAME": "@db-name-production-842e",
+      "AUTH_USER_JWT_SECRET": "@auth-user-jwt-secret-production-j2dn",
+      "URL": "@url-production-1j3z"
+    }
+  }
