@@ -1,15 +1,13 @@
-const albumRouter = require('../routes/api/album/network');
-const commentRouter = require('../routes/api/comment/network');
-const reviewRouter = require('../routes/api/review/network');
-const userRouter = require('../routes/api/user/network');
-const apiRouter = require('../routes/api');
+const albumRouter = require('../routes/album/network');
+const commentRouter = require('../routes/comment/network');
+const reviewRouter = require('../routes/review/network');
+const userRouter = require('../routes/user/network');
 
-const routesApi = (app) => {   
-    app.use('/api', apiRouter);
-    app.use('/api/albums', albumRouter);
-    app.use('/api/comments', commentRouter);
-    app.use('/api/reviews', reviewRouter);
-    app.use('/api/user', userRouter);
+const routesApi = (app) => { 
+    app.use('/albums', albumRouter);
+    app.use('/comments', commentRouter);
+    app.use('/reviews', reviewRouter);
+    app.use('/user', userRouter);
 }
 
 module.exports = routesApi;

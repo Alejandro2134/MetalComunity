@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { succes, error } = require('../../../network/response');
+const { succes, error } = require('../../network/response');
 const controller = require('./controller');
 
 router.post('/signup', (req, res) => {

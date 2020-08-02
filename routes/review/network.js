@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../../middlewares/auth');
+const auth = require('../../middlewares/auth');
 const controller = require('./controller');
-const { succes, error } = require('../../../network/response');
+const { succes, error } = require('../../network/response');
 
 router.post('/:idAlbum', auth, (req, res) => {
     const { idAlbum, user_name } = req.params;

@@ -1,24 +1,24 @@
 const store = require('./store');
+const config = require('../../config');
 
-const addReview = (idAlbum, user_name, review) => {
+const addComment = (idAlbum, user_name, content) => {
     return new Promise ((resolve, reject) => {
-        if(!idAlbum || !user_name || !review) {
+        if(!idAlbum || !user_name || !content) {
             reject('Incomplete data');
             return false;
         }
 
-        const newReview = {
+        const newComment = {
             user: user_name,
             album_id: idAlbum,
-            content: review.content,
-            rating: review.rating
+            content: content
         } 
 
-        resolve(store.add(newReview));
+        resolve(store.add(newComment));
     })
 }
 
-const getReviewsAlbum = (idAlbum, page) => {
+const getCommentsAlbum = (idAlbum, page) => {
     return new Promise ((resolve, reject) => {
         if(!idAlbum) {
             reject('Incomplete data');
@@ -33,8 +33,8 @@ const getReviewsAlbum = (idAlbum, page) => {
                     info: {
                         count: data.totalDocs,
                         pages: data.totalPages,
-                        next: data.nextPage ? `http://localhost:3000/api/reviews/${idAlbum}?page=${data.nextPage}` : null,
-                        prev: data.prevPage ? `http://localhost:3000/api/reviews/${idAlbum}?page=${data.prevPage}` : null
+                        next: data.nextPage ? `${config.url}/comments/${idAlbum}?page=${data.nextPage}` : null,
+                        prev: data.prevPage ? `${config.url}/comments/${idAlbum}?page=${data.prevPage}` : null
                     },
                     results: data.docs
                 }
@@ -48,6 +48,6 @@ const getReviewsAlbum = (idAlbum, page) => {
 }
 
 module.exports = {
-    addReview,
-    getReviewsAlbum
+    addComment,
+    getCommentsAlbum
 }   

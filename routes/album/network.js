@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const controller = require('./controller');
-const { succes, error } = require('../../../network/response');
+const { succes, error } = require('../../network/response');
 
 router.get('/', (req, res) => {
     const { page, random } = req.query;

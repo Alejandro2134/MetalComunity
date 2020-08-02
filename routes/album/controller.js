@@ -1,4 +1,5 @@
 const store = require('./store');
+const config = require('../../config');
 
 const getAlbums = (page, random) => {
     return new Promise((resolve, reject) => {
@@ -18,8 +19,8 @@ const getAlbums = (page, random) => {
                             info: {
                                 count: data.totalDocs,
                                 pages: data.totalPages,
-                                next: data.nextPage ? `http://localhost:3000/api/albums?page=${data.nextPage}` : null,
-                                prev: data.prevPage ? `http://localhost:3000/api/albums?page=${data.prevPage}` : null
+                                next: data.nextPage ? `${config.url}/albums?page=${data.nextPage}` : null,
+                                prev: data.prevPage ? `${config.url}/albums?page=${data.prevPage}` : null
                             },
                             results: data.docs
                         }

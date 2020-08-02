@@ -1,7 +1,7 @@
 const store = require('./store');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const config = require('../../../config');
+const config = require('../../config');
 
 const addUser = (newUser) => {
     return new Promise ((resolve, reject) => {
