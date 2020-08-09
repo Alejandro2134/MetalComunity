@@ -36,8 +36,19 @@ const addAlbum = async (album) => {
     await newAlbum.save();
 }
 
+const updateAlbum = async (newRating, idAlbum) => {
+    const foundAlbum = await Model.findOne({
+        _id: idAlbum
+    })
+
+    foundAlbum.rating = newRating.rating;
+    const newAlbum = foundAlbum.save();
+    return newAlbum;
+}
+
 module.exports = {
     get: getAlbums,
     getAlbum: getAlbum,
     add: addAlbum,
+    update: updateAlbum
 }

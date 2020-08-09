@@ -10,11 +10,22 @@ const routesApi = require('./network/routes');
 //App init
 const app = express();
 
+var whitelist = ['https://metalcommunity.vercel.app/*'];
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 //Middlewares
 app.use(helmet());
-app.use(cors({
-    origin: 'https://metalcommunity.vercel.app'
-}));
+if(process.env.NODE_ENV === 'production') {
+    app.use(cors(corsOptions));
+}
 app.use(bodyParser.json());
 
 //Database

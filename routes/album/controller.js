@@ -44,7 +44,7 @@ const getAlbum = (idAlbum) => {
 const addAlbum = (album) => {
     return new Promise((resolve, reject) => {
         if(!album) {
-            console.error('[message controller] no hay datos del album');
+            console.error('[album controller] no hay datos del album');
             reject('Incomplete data');
             return false;
         }
@@ -53,8 +53,21 @@ const addAlbum = (album) => {
     })
 }
 
+const updateAlbum = (newRating, idAlbum) => {
+    return new Promise((resolve, reject) => {
+        if(!newRating || !idAlbum) {
+            console.error('[album controller] no hay datos del album');
+            reject('Incomplete data');
+            return false;
+        }
+
+        resolve(store.update(newRating, idAlbum));
+    })
+}
+
 module.exports = {
     getAlbums,
     getAlbum,
-    addAlbum
+    addAlbum,
+    updateAlbum
 }

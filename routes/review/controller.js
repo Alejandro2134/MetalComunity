@@ -1,8 +1,9 @@
 const store = require('./store');
 const config = require('../../config');
+const fetch = require('node-fetch');
 
 const addReview = (idAlbum, user_name, review) => {
-    return new Promise ((resolve, reject) => {
+    return new Promise (async (resolve, reject) => {
         if(!idAlbum || !user_name || !review) {
             reject('Incomplete data');
             return false;
@@ -13,8 +14,31 @@ const addReview = (idAlbum, user_name, review) => {
             album_id: idAlbum,
             content: review.content,
             rating: review.rating
-        } 
+        }
+        
+        const reviewsCount = await fetch(`${config.url}/reviews/${idAlbum}`);
+        const { body: { info } } = await reviewsCount.json();
 
+        const ratingInfo = await fetch(`${config.url}/albums/${idAlbum}`);
+        const { body: { rating: currentRating } } = await ratingInfo.json();
+
+        const normalRating = currentRating * info.count;
+        const newRating = (normalRating + review.rating) / (info.count + 1);
+
+        const body = { newRating: { rating: (() => {
+            if(Number.isInteger(newRating)) {
+                return newRating;
+            }
+
+            return newRating.toFixed(1);
+        })() } }
+
+        await fetch(`${config.url}/albums/${idAlbum}`, {
+            method: 'PUT',
+            body: JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        
         resolve(store.add(newReview));
     })
 }

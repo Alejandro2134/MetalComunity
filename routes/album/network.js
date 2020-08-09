@@ -37,4 +37,16 @@ router.post('/', (req, res) => {
         }) 
 })
 
+router.put('/:idAlbum', (req, res) => {
+    const { newRating } = req.body;
+    const { idAlbum } = req.params;
+    controller.updateAlbum(newRating, idAlbum)
+        .then(data => {
+            succes(req, res, data, 200);
+        })
+        .catch(err => {
+            error(req, res, 'Internal error', 500, err);
+        })
+})
+
 module.exports = router;

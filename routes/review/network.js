@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middlewares/auth');
+const auth = require('express-jwt');
 const controller = require('./controller');
+const config = require('../../config');
 const { succes, error } = require('../../network/response');
 
-router.post('/:idAlbum', auth, (req, res) => {
-    const { idAlbum, user_name } = req.params;
+router.post('/:idAlbum', auth({ secret: config.userJwtSecret, algorithms: ['HS256'] }), (req, res) => {
+    const { idAlbum } = req.params;
+    const { sub: user_name } = req.user;
     const { review } = req.body;
 
     controller.addReview(idAlbum, user_name, review)

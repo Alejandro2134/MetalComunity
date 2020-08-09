@@ -24,8 +24,6 @@ const mySchema = new Schema({
         default: 0
     },
     buy_links: [String],
-    reviews: String,
-    comments: String,
     created: { 
         type: Date, 
         default: Date.now 
